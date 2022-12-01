@@ -13,3 +13,4 @@
 # - с именем, оканчивающимся на _override.tf с расширением json
 # - .terraformrc
 # - terraform.rc
+new line
