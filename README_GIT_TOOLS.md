@@ -5,12 +5,14 @@
     Author: Alisdair McDiarmid <alisdair@users.noreply.github.com>
     Date:   Thu Jun 18 10:29:58 2020 -0400
 
-    Update CHANGELOG.md```
+    Update CHANGELOG.md
+    ```
 
 2. Какому тегу соответствует коммит 85024d3?
 
     ```$ git show 85024d3
-    commit 85024d3100126de36331c6982bfaac02cdab9e76 (tag: v0.12.23)```
+    commit 85024d3100126de36331c6982bfaac02cdab9e76 (tag: v0.12.23)
+    ```
 
 3. Сколько родителей у коммита b8d720? Напишите их хеши.
 
@@ -21,7 +23,8 @@
     commit 9ea88f22fc6269854151c571162c5bcf958bee2b
 
     $ git show b8d720^3
-    fatal: ambiguous argument 'b8d720^3': unknown revision or path not in the working tree.```
+    fatal: ambiguous argument 'b8d720^3': unknown revision or path not in the working tree.
+    ```
 
 4. Перечислите хеши и комментарии всех коммитов которые были сделаны между тегами v0.12.23 и v0.12.24.
 
@@ -40,7 +43,8 @@
 5. Найдите коммит в котором была создана функция func providerSource, ее определение в коде выглядит так func providerSource(...) (вместо троеточия перечислены аргументы).
 
     ```$ git log -S'func providerSource('
-    commit 8c928e83589d90a031f811fae52a81be7153e82f```
+    commit 8c928e83589d90a031f811fae52a81be7153e82f
+    ```
 
 6. Найдите все коммиты в которых была изменена функция globalPluginDirs.
 
@@ -107,7 +111,8 @@
     Author: James Bardin <j.bardin@gmail.com>
     Date:   Wed Aug 9 10:34:11 2017 -0400
 
-        Add missing OS_ARCH dir to global plugin paths```
+        Add missing OS_ARCH dir to global plugin paths
+        ```
 
 7. Кто автор функции synchronizedWriters?
 
@@ -120,4 +125,5 @@
 
     commit 5ac311e2a91e381e2f52234668b49ba670aa0fe5
     Author: Martin Atkins <mart@degeneration.co.uk>
-    Date:   Wed May 3 16:25:41 2017 -0700```
+    Date:   Wed May 3 16:25:41 2017 -0700
+    ```
