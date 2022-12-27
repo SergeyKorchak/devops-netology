@@ -67,7 +67,6 @@
 	vagrant@vagrant:/tmp$ cd ..
 	vagrant@vagrant:/$ cp /bin/bash /tmp/new_path_directory/
 	vagrant@vagrant:/$ PATH=/tmp/new_path_directory/:$PATH
-	
 	vagrant@vagrant:/$ type -a bash
 	bash is /tmp/new_path_directory/bash
 	bash is /usr/bin/bash
