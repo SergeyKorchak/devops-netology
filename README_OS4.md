@@ -7,7 +7,7 @@
 	[Service]
 	User=node_exporter
 	Group=node_exporter
-	ExecStart=/usr/local/bin/node_exporter
+	ExecStart=/usr/local/bin/node_exporter $OPTIONS
 	
 	[Install]
 	WantedBy=multi-user.target
@@ -26,6 +26,8 @@
 	    825 ?        00:00:00 node_exporter
 	
 	Выполнено добавление в автозапуск, проверка запуска, завершения, автозапуска после перезагрузки.
+	
+	Дополнительные опции запуска службы можно передать в файле .service в ExecStart через переменную. Задать в значение переменной необходимые опции. Или задать опции в ExecStart напрямую.
 	```
 
 2. Ознакомьтесь с опциями node_exporter и выводом /metrics по-умолчанию. Приведите несколько опций, которые вы бы выбрали для базового мониторинга хоста по CPU, памяти, диску и сети.
