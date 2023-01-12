@@ -96,10 +96,20 @@
 6. Запустите любой долгоживущий процесс (не ls, который отработает мгновенно, а, например, sleep 1h) в отдельном неймспейсе процессов; покажите, что ваш процесс работает под PID 1 через nsenter.
 
 	```
-	Пока не выполнено.
-
-	sergey@pc:~$ sudo -i
+	vagrant@vagrant:~$ sudo -i
 	root@pc:~# sleep 1h
+	
+	vagrant@vagrant:~$ sudo -i
+	root@vagrant:~# ps -e | grep sleep
+   	2539 pts/0    00:00:00 sleep
+	root@vagrant:~# unshare -f --pid --mount-proc && pidof 2539
+	root@vagrant:~# nsenter --target 1 --pid --mount
+	root@vagrant:/# ps
+  	  PID TTY          TIME CMD
+  	    1 pts/1    00:00:00 bash
+	    13 pts/1    00:00:00 nsenter
+	    14 pts/1    00:00:00 bash
+	    27 pts/1    00:00:00 ps
 	```
 
 7. Найдите информацию о том, что такое :(){ :|:& };:. Вызов dmesg расскажет, какой механизм помог автоматической стабилизации. Как настроен этот механизм по-умолчанию, и как изменить число процессов, которое можно создать в сессии?
