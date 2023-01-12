@@ -17,12 +17,23 @@
 3. Основываясь на знаниях о перенаправлении потоков предложите способ обнуления открытого удаленного файла (чтобы освободить место на файловой системе).
 
 	```
-	> filename
-
-	Дополнение к ответу:
-	vagrant@vagrant:~/tmp$ lsof +D /home/vagrant/tmp
-	COMMAND  PID    USER   FD   TYPE DEVICE SIZE/OFF    NODE NAME
-	vim     1435 vagrant    4u   REG  253,0    12288 1310814 /home/vagrant/tmp/.filename.swp
+	vagrant@vagrant:~$ ping 127.0.0.1 >test &
+	[1] 1661
+	vagrant@vagrant:~$ rm test
+	vagrant@vagrant:/$ sudo lsof -p 1661 | grep del
+	ping    1661 vagrant    1w   REG  253,0    58882 1316908 /home/vagrant/test (deleted)
+	
+	root@vagrant:/# echo '' > /proc/1661/fd/1
+	
+	root@vagrant:/# sudo truncate -s 0 /proc/1661/fd/
+	
+	vagrant@vagrant:/$ sudo cat /proc/1661/fd/1 > /dev/null
+	
+	vagrant@vagrant:/$ sudo lsof -p 1661 | grep del
+	ping    1661 vagrant    1w   REG  253,0   307102 1316908 /home/vagrant/test (deleted)
+	
+	vagrant@vagrant:/$ sudo kill 1661
+	vagrant@vagrant:/$ sudo lsof | grep del
 	```
 
 4. Занимают ли зомби-процессы какие-то ресурсы в ОС (CPU, RAM, IO)?
