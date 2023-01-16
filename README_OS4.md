@@ -7,7 +7,7 @@
 	[Service]
 	User=node_exporter
 	Group=node_exporter
-	ExecStart=/usr/local/bin/node_exporter
+	ExecStart=/usr/local/bin/node_exporter $OPTIONS
 	
 	[Install]
 	WantedBy=multi-user.target
@@ -26,11 +26,13 @@
 	    825 ?        00:00:00 node_exporter
 	
 	Выполнено добавление в автозапуск, проверка запуска, завершения, автозапуска после перезагрузки.
+	
+	Дополнительные опции запуска службы можно передать в файле .service в ExecStart через переменную. Задать в значение переменной необходимые опции. Или задать опции в ExecStart напрямую.
 	```
 
 2. Ознакомьтесь с опциями node_exporter и выводом /metrics по-умолчанию. Приведите несколько опций, которые вы бы выбрали для базового мониторинга хоста по CPU, памяти, диску и сети.
 
-	```
+	``````
 	Несколько примеров:
 	
 	# TYPE node_cpu_seconds_total counter
@@ -61,7 +63,7 @@
 	node_network_receive_bytes_total{device="enp3s0"} 0
 	node_network_receive_bytes_total{device="lo"} 31697
 	node_network_receive_bytes_total{device="wlp2s0"} 6.572226e+06
-	```
+	``````
 
 3. Установите в свою виртуальную машину Netdata. Воспользуйтесь готовыми пакетами для установки. После успешной перезагрузки в браузере на своем ПК (не в виртуальной машине) вы должны суметь зайти на localhost:19999. Ознакомьтесь с метриками, которые по умолчанию собираются Netdata и с комментариями, которые даны к этим метрикам.
 
@@ -94,10 +96,20 @@
 6. Запустите любой долгоживущий процесс (не ls, который отработает мгновенно, а, например, sleep 1h) в отдельном неймспейсе процессов; покажите, что ваш процесс работает под PID 1 через nsenter.
 
 	```
-	Пока не выполнено.
-
-	sergey@pc:~$ sudo -i
+	vagrant@vagrant:~$ sudo -i
 	root@pc:~# sleep 1h
+	
+	vagrant@vagrant:~$ sudo -i
+	root@vagrant:~# ps -e | grep sleep
+   	2539 pts/0    00:00:00 sleep
+	root@vagrant:~# unshare -f --pid --mount-proc && pidof 2539
+	root@vagrant:~# nsenter --target 1 --pid --mount
+	root@vagrant:/# ps
+  	  PID TTY          TIME CMD
+  	    1 pts/1    00:00:00 bash
+	    13 pts/1    00:00:00 nsenter
+	    14 pts/1    00:00:00 bash
+	    27 pts/1    00:00:00 ps
 	```
 
 7. Найдите информацию о том, что такое :(){ :|:& };:. Вызов dmesg расскажет, какой механизм помог автоматической стабилизации. Как настроен этот механизм по-умолчанию, и как изменить число процессов, которое можно создать в сессии?
