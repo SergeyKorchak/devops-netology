@@ -4,6 +4,8 @@
 	Выполнено
 	```
 
+![Screenshot_1](https://user-images.githubusercontent.com/119151349/216830735-adf71c1a-4d0b-418a-9a3a-47d27fd519ed.png)
+
 2. Установите Google authenticator на мобильный телефон. Настройте вход в Bitwarden акаунт через Google authenticator OTP.
 
 	```
@@ -34,6 +36,8 @@
 	A start job for unit apache2.service has finished successfully.
 	The job identifier is 4852.
 	```
+
+![Screenshot_3](https://user-images.githubusercontent.com/119151349/216830769-3704c7e2-af80-46ab-aa01-fa9273efccae.png)
 
 4. Проверьте на TLS уязвимости произвольный сайт в интернете (кроме сайтов МВД, ФСБ, МинОбр, НацБанк, РосКосмос, РосАтом, РосНАНО и любых госкомпаний, объектов КИИ, ВПК ... и тому подобное).
 
@@ -146,3 +150,5 @@
 	101 packets received by filter
 	0 packets dropped by kernel
 	```
+
+![Screenshot_7](https://user-images.githubusercontent.com/119151349/216830816-24711e52-2e07-49bf-8f97-307dba9680f0.png)
