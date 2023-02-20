@@ -153,22 +153,29 @@ import socket
 import time
 
 hosts = {'drive.google.com':'142.251.141.46', 'mail.google.com':'0.0.0.0', 'google.com':'0.0.0.0'}
-for host in hosts:
-    ip = socket.gethostbyname(host)
-    if ip != hosts[host]:
-        print('[ERROR] '+str(host)+' IP mistmatch: '+hosts[host]+' '+ip)
-        hosts[host]=ip
-    else:
-        print(str(host) + ' ' + ip)
-        time.sleep(2)
+while 1 == 1:
+    for host in hosts:
+        ip = socket.gethostbyname(host)
+        if ip != hosts[host]:
+            print('[ERROR] '+str(host)+' IP mistmatch: '+hosts[host]+' '+ip)
+            hosts[host]=ip
+        else:
+            print(str(host) + ' ' + ip)
+            time.sleep(2)
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
 sergey@pc:~$ python3 1.py
-drive.google.com 142.251.141.46
-[ERROR] mail.google.com IP mistmatch: 0.0.0.0 142.250.187.101
-[ERROR] google.com IP mistmatch: 0.0.0.0 142.250.187.142
+[ERROR] drive.google.com IP mistmatch: 142.251.141.46 172.217.17.110
+[ERROR] mail.google.com IP mistmatch: 0.0.0.0 142.250.184.133
+[ERROR] google.com IP mistmatch: 0.0.0.0 142.250.187.110
+drive.google.com 172.217.17.110
+mail.google.com 142.250.184.133
+google.com 142.250.187.110
+drive.google.com 172.217.17.110
+mail.google.com 142.250.184.133
+google.com 142.250.187.110
 ```
 
 ------
