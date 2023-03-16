@@ -27,7 +27,7 @@
         { "name" : "first",
         "type" : "server",
         "ip" : 7175 
-        }
+        },
         { "name" : "second",
         "type" : "proxy",
         "ip" : "71.78.22.43"
@@ -81,11 +81,17 @@ mail.google.com 142.250.187.101
 ### json-файл(ы), который(е) записал ваш скрипт:
 ```
 
+[{"mail.google.com": "142.250.187.101"}, {"google.com": "142.250.187.142"}]
+
+https://github.com/SergeyKorchak/devops-netology/blob/main/file1.json
 ```
 
 ### yml-файл(ы), который(е) записал ваш скрипт:
 ```
+- mail.google.com: 142.250.187.101
+- google.com: 142.250.187.142
 
+https://github.com/SergeyKorchak/devops-netology/blob/main/file2.yaml
 ```
 
 ------
