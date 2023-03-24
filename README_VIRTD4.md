@@ -4,9 +4,7 @@
 
 Чтобы получить зачёт, вам нужно предоставить скриншот страницы с созданным образом из личного кабинета YandexCloud.
 
-```
 https://github.com/SergeyKorchak/devops-netology/blob/main/VIRTD4_1.png
-```
 
 ## Задача 2
 
@@ -18,9 +16,7 @@ https://github.com/SergeyKorchak/devops-netology/blob/main/VIRTD4_1.png
 
 Чтобы получить зачёт, вам нужно предоставить вывод команды terraform apply и страницы свойств, созданной ВМ из личного кабинета YandexCloud.
 
-```
 https://github.com/SergeyKorchak/devops-netology/blob/main/VIRTD4_2.png
-```
 
 ## Задача 3
 
