@@ -47,6 +47,4 @@ d4210bb1ccda   stefanprodan/caddy                 "/sbin/tini -- caddy…"   44 
 Чтобы получить зачёт, предоставьте:
 - скриншот работающего веб-интерфейса Grafana с текущими метриками, как на примере ниже.
 
-```
-
-```
+![VIRTD4_3](https://user-images.githubusercontent.com/119151349/228792696-f7d65cbe-220d-4c47-9f56-a4a402a704ad.png)
