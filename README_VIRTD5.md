@@ -34,6 +34,8 @@ Overlay Network - это распределенная сеть между мно
 docker node ls
 ```
 
+![VIRTD5_1](https://user-images.githubusercontent.com/119151349/229193084-688142f0-218d-40c3-968c-01e47739c2ac.png)
+
 ## Задача 3
 
 Создайте ваш первый, готовый к боевой эксплуатации кластер мониторинга, состоящий из стека микросервисов.
@@ -43,3 +45,5 @@ docker node ls
 ```
 docker service ls
 ```
+
+![VIRTD5_2](https://user-images.githubusercontent.com/119151349/229193151-ae0df006-d1e4-4b44-9ccd-892b3294d892.png)
