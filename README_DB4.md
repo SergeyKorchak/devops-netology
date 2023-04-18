@@ -136,6 +136,11 @@ test_database=# \dtS+
 ```
 root@4bf3c5067b1a:/# pg_dump -U postgres -d test_database > test_database_dump.sql
 
-test_database=# create index idx_title on orders(title);
-CREATE INDEX
+При создании таблицы для столбца title можно определить атрибут UNIQUE.
+
+CREATE TABLE public.orders (
+id integer NOT NULL,
+title character varying(80) NOT NULL UNIQUE,
+price integer DEFAULT 0,
+);
 ```
