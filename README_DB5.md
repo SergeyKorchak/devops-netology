@@ -25,32 +25,46 @@
 - ответ `Elasticsearch` на запрос пути `/` в json-виде.
 
 ```
-Прошу подсказать, что может быть некорректно в dockerfile. Контейнер удалось поднять только один раз. Остальное время устанавливается статус "exited".
-
 - текст Dockerfile-манифеста:
 FROM centos:7
-RUN yum -y install wget sudo perl-Digest-SHA && wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.7.0-linux-x86_64.tar.gz && wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.7.0-linux-x86_64.tar.gz.sha512 && shasum -a 512 -c elasticsearch-8.7.0-linux-x86_64.tar.gz.sha512 && tar -xzf elasticsearch-8.7.0-linux-x86_64.tar.gz
-RUN /bin/sh -c 'mkdir /var/lib/elasticsearch && mkdir /var/lib/elasticsearch/logs && mkdir /var/lib/elasticsearch/data && useradd -s /sbin/nologin elastic'
-WORKDIR /usr/src/elasticsearch
-RUN /bin/sh -c 'rm -f /usr/src/elasticsearch/elasticsearch-8.7.0/config/elasticsearch.yml'
-COPY ./elasticsearch.yml /usr/src/elasticsearch/elasticsearch-8.7.0/config
-RUN /bin/sh -c 'chown -R elastic /usr/src/elasticsearch/elasticsearch-8.7.0 && chown -R elastic /var/lib/elasticsearch'
+ENV PATH=/usr/lib:/elasticsearch-8.7.0/jdk/bin:/elasticsearch-8.7.0/bin:$PATH
+RUN yum -y install wget sudo perl-Digest-SHA && wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.7.0-linux-x86_64.tar.gz && wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.7.0-linux-x86_64.tar.gz.sha512 && shasum -a 512 -c elasticsearch-8.7.0-linux-x86_64.tar.gz.sha512 && tar -xzf elasticsearch-8.7.0-linux-x86_64.tar.gz && rm elasticsearch-8.7.0-linux-x86_64.tar.gz && rm elasticsearch-8.7.0-linux-x86_64.tar.gz.sha512
+ENV ES_HOME=/elasticsearch-8.7.0
+RUN groupadd -g 1000 elasticsearch && useradd elasticsearch -u 1000 -g 1000
+RUN mkdir /var/lib/elasticsearch
+WORKDIR /var/lib/elasticsearch
+RUN set -ex && for path in data logs config config/scripts; do \
+        mkdir -p "$path"; \
+        chown -R elasticsearch:elasticsearch "$path"; \
+    done
+RUN mkdir /elasticsearch-8.7.0/snapshots && chown -R elasticsearch:elasticsearch /elasticsearch-8.7.0
+COPY logging.yml /elasticsearch-8.7.0/config/
+COPY elasticsearch.yml /elasticsearch-8.7.0/config/
+USER elasticsearch
+CMD ["elasticsearch"]
 EXPOSE 9200 9300
-ENTRYPOINT sudo -u elastic /usr/src/elasticsearch/elasticsearch-8.7.0/bin/elasticsearch
 
 - ссылку на образ в репозитории dockerhub:
-https://hub.docker.com/repository/docker/sergeykorchak/repo/general
+https://hub.docker.com/repository/docker/sergeykorchak/elasticsearch/general
 
 - ответ `Elasticsearch` на запрос пути `/` в json-виде:
-sergey@pc:~$ sudo docker run --rm -d --name elasticsearch -p 9200:9200 -p 9300:9300 sergeykorchak/repo:elasticsearch
-0491dabdf16fac23afe5315754559a62f75b43318e953dce2559005eb4c0f6f4
-sergey@pc:~$ sudo docker ps -a
-CONTAINER ID   IMAGE                              COMMAND                  CREATED         STATUS         PORTS                                                                                  NAMES
-0491dabdf16f   sergeykorchak/repo:elasticsearch   "/bin/sh -c 'sudo -u…"   7 seconds ago   Up 2 seconds   0.0.0.0:9200->9200/tcp, :::9200->9200/tcp, 0.0.0.0:9300->9300/tcp, :::9300->9300/tcp   elasticsearch
-
-sergey@pc:~$ sudo docker ps -all
-CONTAINER ID   IMAGE                              COMMAND                  CREATED         STATUS                     PORTS     NAMES
-8b12a89723e5   sergeykorchak/repo:elasticsearch   "/bin/sh -c 'sudo -u…"   5 minutes ago   Exited (1) 5 minutes ago             elasticsearch
+{
+  "name" : "netology_test",
+  "cluster_name" : "netology",
+  "cluster_uuid" : "7NxDIZGYQIO45v8TPx1OWg",
+  "version" : {
+    "number" : "8.7.0",
+    "build_flavor" : "default",
+    "build_type" : "tar",
+    "build_hash" : "09520b59b6bc1057340b55750186466ea715e30e",
+    "build_date" : "2023-03-27T16:31:09.816451435Z",
+    "build_snapshot" : false,
+    "lucene_version" : "9.5.0",
+    "minimum_wire_compatibility_version" : "7.17.0",
+    "minimum_index_compatibility_version" : "7.0.0"
+  },
+  "tagline" : "You Know, for Search"
+}
 ```
 
 ## Задача 2
@@ -79,7 +93,22 @@ CONTAINER ID   IMAGE                              COMMAND                  CREAT
 Удалите все индексы.
 
 ```
------
+sergey@pc:~$ sudo curl http://127.0.0.1:9200/_cat/indices
+green  open ind-1 mj7GA2KPS0CD-ZtzCcgOwg 1 0 0 0 225b 225b
+yellow open ind-3 -4TuRoOySUG1p-u6zJb9JQ 4 2 0 0 900b 900b
+yellow open ind-2 hff62P3tRkmGOI1rT7-Lwg 2 1 0 0 450b 450b
+
+sergey@pc:~$ sudo curl http://127.0.0.1:9200/_cluster/health
+{"cluster_name":"netology","status":"yellow","timed_out":false,"number_of_nodes":1,"number_of_data_nodes":1,"active_primary_shards":7,"active_shards":7,"relocating_shards":0,"initializing_shards":0,"unassigned_shards":10,"delayed_unassigned_shards":0,"number_of_pending_tasks":0,"number_of_in_flight_fetch":0,"task_max_waiting_in_queue_millis":0,"active_shards_percent_as_number":41.17647058823529}
+
+sergey@pc:~$ sudo curl -X DELETE http://127.0.0.1:9200/ind-1
+{"acknowledged":true}
+
+sergey@pc:~$ sudo curl -X DELETE http://127.0.0.1:9200/ind-2
+{"acknowledged":true}
+
+sergey@pc:~$ sudo curl -X DELETE http://127.0.0.1:9200/ind-3
+{"acknowledged":true}
 ```
 
 ## Задача 3
@@ -106,5 +135,31 @@ CONTAINER ID   IMAGE                              COMMAND                  CREAT
 **Приведите в ответе** запрос к API восстановления и итоговый список индексов.
 
 ```
------
+sergey@pc:~$ sudo curl -X PUT "http://127.0.0.1:9200/_snapshot/netology_backup/my_snapshot?pretty
+{
+  "acknowledged" : true
+}
+
+sergey@pc:~$ sudo curl http://127.0.0.1:9200/_cat/indices
+green open test qvKtYuavSkih0g7qvERYpQ 1 0 0 0 225b 225b
+
+[elasticsearch@0f4d33bc550e snapshots]$ ll
+total 36
+-rw-r--r-- 1 elasticsearch elasticsearch   587 May  1 07:04 index-0
+-rw-r--r-- 1 elasticsearch elasticsearch     8 May  1 07:04 index.latest
+drwxr-xr-x 3 elasticsearch elasticsearch  4096 May  1 07:04 indices
+-rw-r--r-- 1 elasticsearch elasticsearch 18793 May  1 07:04 meta-2yi_NtfuSG6ZhmjCNjhCnw.dat
+-rw-r--r-- 1 elasticsearch elasticsearch   303 May  1 07:04 snap-2yi_NtfuSG6ZhmjCNjhCnw.dat
+
+sergey@pc:~$ sudo curl http://127.0.0.1:9200/_cat/indices
+green open test-2 bs5C5iE3Re2Igt_TtMFcrA 1 0 0 0 225b 225b
+
+sergey@pc:~$ sudo curl -X POST http://127.0.0.1:9200/_snapshot/netology_backup/my_snapshot/_restore?pretty -H 'Content-Type: application/json' -d' {"include_global_state":true}'
+{
+  "accepted" : true
+}
+
+sergey@pc:~$ sudo curl http://127.0.0.1:9200/_cat/indices
+green open test-2 bs5C5iE3Re2Igt_TtMFcrA 1 0 0 0 225b 225b
+green open test   oBDKcm3ZQ3ipq0sOp9Xzcw 1 0 0 0 225b 225b
 ```
