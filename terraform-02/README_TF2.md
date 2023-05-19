@@ -17,6 +17,8 @@ preemptible = true - сделать виртуальную машину прер
 core_fraction=5 - базовый уровень производительности vCPU
 ```
 
+![VM](https://github.com/SergeyKorchak/devops-netology/assets/119151349/13673792-afde-4ab4-b3e2-11f3bec5f525)
+
 ### Задание 2
 
 1. Изучите файлы проекта.
