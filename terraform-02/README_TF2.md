@@ -30,7 +30,7 @@ core_fraction=5 - базовый уровень производительнос
 
 1. Изучите файлы проекта.
 2. Замените все "хардкод" **значения** для ресурсов **yandex_compute_image** и **yandex_compute_instance** на **отдельные** переменные. К названиям переменных ВМ добавьте в начало префикс **vm_web_** .  Пример: **vm_web_name**.
-2. Объявите нужные переменные в файле [**variables.tf**](https://github.com/SergeyKorchak/devops-netology/blob/main/terraform-02/02/src/variables.tf), обязательно указывайте тип переменной. Заполните их **default** прежними значениями из main.tf. 
+2. Объявите нужные переменные в файле [**variables.tf**](https://github.com/SergeyKorchak/devops-netology/blob/main/terraform-02/02/src/variables.tf), обязательно указывайте тип переменной. Заполните их **default** прежними значениями из [**main.tf**](https://github.com/SergeyKorchak/devops-netology/blob/main/terraform-02/02/src/main.tf). 
 3. Проверьте terraform plan (изменений быть не должно). 
 
 ```
@@ -41,7 +41,7 @@ No changes. Your infrastructure matches the configuration.
 ### Задание 3
 
 1. Создайте в корне проекта файл 'vms_platform.tf' . Перенесите в него все переменные первой ВМ.
-2. Скопируйте блок ресурса и создайте с его помощью вторую ВМ(в файле main.tf): **"netology-develop-platform-db"** ,  cores  = 2, memory = 2, core_fraction = 20. Объявите ее переменные с префиксом **vm_db_** в том же файле('vms_platform.tf').
+2. Скопируйте блок ресурса и создайте с его помощью вторую ВМ(в файле main.tf): **"netology-develop-platform-db"** ,  cores  = 2, memory = 2, core_fraction = 20. Объявите ее переменные с префиксом **vm_db_** в том же файле([**vms_platform.tf**](https://github.com/SergeyKorchak/devops-netology/blob/main/terraform-02/02/src/vms_platform.tf)).
 3. Примените изменения.
 
 ```
@@ -50,7 +50,7 @@ No changes. Your infrastructure matches the configuration.
 
 ### Задание 4
 
-1. Объявите в файле outputs.tf output типа map, содержащий { instance_name = external_ip } для каждой из ВМ.
+1. Объявите в файле [**outputs.tf**](https://github.com/SergeyKorchak/devops-netology/blob/main/terraform-02/02/src/outputs.tf) output типа map, содержащий { instance_name = external_ip } для каждой из ВМ.
 2. Примените изменения.
 
 В качестве решения приложите вывод значений ip-адресов команды ```terraform output```
@@ -68,7 +68,7 @@ outputs = {
 
 ### Задание 5
 
-1. В файле locals.tf опишите в **одном** local-блоке имя каждой ВМ, используйте интерполяцию ${..} с несколькими переменными по примеру из лекции.
+1. В файле [**locals.tf**](https://github.com/SergeyKorchak/devops-netology/blob/main/terraform-02/02/src/locals.tf) опишите в **одном** local-блоке имя каждой ВМ, используйте интерполяцию ${..} с несколькими переменными по примеру из лекции.
 2. Замените переменные с именами ВМ из файла variables.tf на созданные вами local переменные.
 3. Примените изменения.
 
