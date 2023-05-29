@@ -4,7 +4,7 @@ data "yandex_compute_image" "ubuntu" {
 
 resource "yandex_compute_instance" "web" {
 count = 2
-name = "netology-develop-platform-web-${count.index}"
+name = "netology-develop-platform-web-${count.index + 1}"
 resources {
     cores         = var.vm_resources.cores
     memory        = var.vm_resources.memory

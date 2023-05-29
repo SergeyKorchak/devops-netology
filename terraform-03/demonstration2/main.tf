@@ -18,7 +18,7 @@ provider "yandex" {
 
 #создаем облачную сеть
 resource "yandex_vpc_network" "develop" {
-  name = "develop"
+  name = "develop2"
 }
 
 #создаем подсеть

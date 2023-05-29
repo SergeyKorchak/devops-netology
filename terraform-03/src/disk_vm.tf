@@ -3,7 +3,7 @@ count = 3
   name       = "empty-disk-${count.index}"
   type       = "network-hdd"
   zone       = "ru-central1-a"
-  size       = 64
+  size       = 1
 }
 
 resource "yandex_compute_instance" "web_disk" {
@@ -28,5 +28,12 @@ resource "yandex_compute_instance" "web_disk" {
   metadata = {
     serial-port-enable = local.serial-port-enable
     ssh-keys = local.ssh-keys
+  }
+  dynamic "secondary_disk" {
+    for_each = yandex_compute_disk.empty-disk
+    content {
+      device_name = "disk${secondary_disk.key}"
+      disk_id     = secondary_disk.value.id
+    }
   }
 }
