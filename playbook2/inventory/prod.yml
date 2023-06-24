@@ -1,0 +1,9 @@
+---
+clickhouse:
+  hosts:
+    clickhouse-01:
+      ansible_host: localhost
+vector:
+  hosts:
+    vector-01:
+      ansible_host: localhost
