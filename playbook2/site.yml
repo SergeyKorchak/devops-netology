@@ -21,7 +21,7 @@
             dest: "./clickhouse-common-static-{{ clickhouse_version }}.rpm"
     - name: Install clickhouse packages
       become: true
-      ansible.builtin.yum:
+      ansible.builtin.apt:
         name:
           - clickhouse-common-static-{{ clickhouse_version }}.rpm
           - clickhouse-client-{{ clickhouse_version }}.rpm
@@ -45,12 +45,12 @@
   tasks:
     - name: Get Vector distrib
       ansible.builtin.get_url:
-        url: "https://packages.timber.io/vector/0.21.1/vector-0.21.1-1.{{ ansible_architecture }}.rpm"
-        dest: "./vector-0.21.1-1.{{ ansible_architecture }}.rpm"
+        url: "https://packages.timber.io/vector/0.29.1/vector-0.29.1-1.x86_64.rpm"
+        dest: "./vector-0.21.1-1.x86_64.rpm"
     - name: Install Vector packages
       become: true
       ansible.builtin.yum:
-        name: vector-0.21.1-1.{{ ansible_architecture }}.rpm
+        name: vector-0.21.1-1.x86_64.rpm
       notify: Start Vector service
     - name: Deploy config Vector
       template:
