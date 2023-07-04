@@ -11,17 +11,19 @@
         - name: Get clickhouse distrib
           ansible.builtin.get_url:
             url: "https://packages.clickhouse.com/deb/pool/main/c/{{ item }}/{{ item }}_{{ clickhouse_version }}_all.deb"
-            dest: "./{{ item }}-{{ clickhouse_version }}.deb"
+            dest: "./{{ item }}.deb"
           with_items: "{{ clickhouse_packages }}"
       rescue:
         - name: Get clickhouse distrib
           ansible.builtin.get_url:
-            url: "https://packages.clickhouse.com/deb/pool/main/c/{{ item }}/clickhouse-common-static_{{ clickhouse_version }}_amd64.deb"
-            dest: "./clickhouse-common-static-{{ clickhouse_version }}.deb"
+            url: "https://packages.clickhouse.com/deb/pool/main/c/clickhouse-common-static/clickhouse-common-static_{{ clickhouse_version }}_amd64.deb"
+            dest: "./clickhouse-common-static.deb"
     - name: Install clickhouse packages
       become: true
       ansible.builtin.apt:
-        deb: "./"
+        deb: "./clickhouse-client.deb"
+        deb: "./clickhouse-server.deb"
+        deb: "./clickhouse-common-static.deb"
         update_cache: true
         force: true
       notify: Start clickhouse service
